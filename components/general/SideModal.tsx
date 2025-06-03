@@ -1,7 +1,26 @@
+"use client";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { usePathname } from "next/navigation";
+
+const links = [
+  {
+    title: "Home",
+    path: "/",
+  },
+  {
+    title: "Stack",
+    path: "/stack",
+  },
+  {
+    title: "About",
+    path: "/about",
+  },
+];
 
 const Modal = ({ closeModal }: any) => {
+  const pathname = usePathname();
+
   return (
     <div
       onClick={closeModal}
@@ -16,23 +35,19 @@ const Modal = ({ closeModal }: any) => {
           X
         </Button>
 
-        <Link className="hover:text-blue-500" href="/" onClick={closeModal}>
-          Home
-        </Link>
-        <Link
-          className="hover:text-blue-500"
-          href="/stack"
-          onClick={closeModal}
-        >
-          Stack
-        </Link>
-        <Link
-          className="hover:text-blue-500"
-          href="/about"
-          onClick={closeModal}
-        >
-          About
-        </Link>
+        {links.map((link) => (
+          <Link
+            href={link.path}
+            key={link.title}
+            className={`${
+              pathname === link.path
+                ? "text-blue-600 text-base font-semibold underline"
+                : "text-base font-semibold"
+            }`}
+          >
+            {link.title}
+          </Link>
+        ))}
       </div>
     </div>
   );
